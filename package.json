@@ -1,0 +1,29 @@
+{
+  "name": "poorimpulse-web",
+  "version": "1.0.0",
+  "description": "Website for the Pool Impulse Control website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "jshint .",
+    "validate": "npm ls"
+  },
+  "author": "Russell Hay",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-changed": "^1.3.0",
+    "gulp-util": "^3.0.6",
+    "jade": "^1.11.0",
+    "precommit-hook": "^3.0.0",
+    "replace-ext": "0.0.1",
+    "require-dir": "^0.3.0",
+    "through2": "^2.0.0"
+  },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ],
+  "private": true
+}
