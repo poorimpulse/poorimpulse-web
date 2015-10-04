@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "jshint .",
-    "validate": "npm ls"
+    "validate": "npm ls && gulp"
   },
   "author": "Russell Hay",
   "license": "MIT",

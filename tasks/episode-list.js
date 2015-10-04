@@ -10,13 +10,15 @@ var through = require('through2'),
     gutil = require('gulp-util'),
     PluginError = gutil.PluginError;
 
-function episodeList(templateName) {
+function episodeList(templateName, opts) {
     if (!templateName) {
         throw new PluginError(PLUGIN_NAME, 'Missing template');
     }
 
+    opts = opts || {};
+
     var data = [];
-    var outputFilename = replaceExt(path.basename(templateName), '.html');
+    var outputFilename = replaceExt(path.basename(templateName), opts.ext || '.html');
     var templatePath = process.cwd() + '/' + templateName;
     var template = jade.compileFile(templatePath, {
         filename: templatePath,
@@ -26,7 +28,9 @@ function episodeList(templateName) {
 
     var cacheData = function (file, enc, cb) {
         if (file.isBuffer()) {
-            data.push(JSON.parse(String(file.contents)));
+            var fdata = JSON.parse(String(file.contents));
+            fdata.guid = replaceExt(path.basename(file.path), '.html');
+            data.push(fdata);
         } else if (file.isStream()) {
             return cb(new PluginError(PLUGIN_NAME, 'Streaming not supported'));
         }
@@ -50,4 +54,10 @@ gulp.task('episode-list', function() {
    gulp.src('episodes/*.json')
        .pipe(episodeList('template/index.jade'))
        .pipe(gulp.dest('output'));
+});
+
+gulp.task('rss', function () {
+    gulp.src('episodes/*.json')
+        .pipe(episodeList('template/feed.jade', { 'ext': '.rss' }))
+        .pipe(gulp.dest('output'));
 });

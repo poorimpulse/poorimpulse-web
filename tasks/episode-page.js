@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
     jade = require('jade'),
+    changed = require('gulp-changed'),
     replaceExt = require('replace-ext');
 
 const PLUGIN_NAME = 'episodePage';
@@ -39,6 +40,7 @@ function episodePage(templateName) {
 
 gulp.task('episode-pages', function() {
    gulp.src('episodes/*.json')
+       .pipe(changed('output'))
        .pipe(episodePage('template/episode.jade'))
-       .pipe(gulp.dest('output/episodes'));
+       .pipe(gulp.dest('output'));
 });
