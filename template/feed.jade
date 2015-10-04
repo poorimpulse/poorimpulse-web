@@ -26,7 +26,7 @@ rss(version='2.0')
                 description= summary
                 link http://poorimpulse.co/ntrol/#{item.guid}
                 guid http://poorimpulse.co/ntrol/#{item.guid}
-                enclosure(url="http://poorimpulse.co/ntrol/audio/#{item.guid}.mp3" type="audio/mpeg")
+                enclosure(url="http://poorimpulse.co/ntrol/audio/#{item.guid}.mp3" length="#{item.audioLength}" type="audio/mpeg")
                 itunes:author= item.narrated_by.name
                 itunes:explicit Yes
                 itunes:duration 00:30:00

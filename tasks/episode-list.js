@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     jade = require('jade'),
     path = require('path'),
+    fs = require('fs'),
     replaceExt = require('replace-ext');
 
 const PLUGIN_NAME = 'episodeList';
@@ -30,12 +31,27 @@ function episodeList(templateName, opts) {
         if (file.isBuffer()) {
             var fdata = JSON.parse(String(file.contents));
             fdata.guid = replaceExt(path.basename(file.path), '');
-            data.push(fdata);
+
+            if (opts.includeLength) {
+                var audioPath = process.cwd() + '/audio/' + fdata.guid + '.mp3';
+                fs.stat(audioPath, function (err, stats) {
+                    if (err) {
+                        return cb(new PluginError(PLUGIN_NAME, err));
+                    }
+                    
+                    fdata.audioLength = stats.size;
+                    data.push(fdata);
+                    cb();
+                });
+            } else {
+                data.push(fdata);
+                cb();
+            }
         } else if (file.isStream()) {
             return cb(new PluginError(PLUGIN_NAME, 'Streaming not supported'));
+        } else {
+            cb();
         }
-
-        cb();
     };
 
     var endStream = function(cb) {
@@ -58,6 +74,6 @@ gulp.task('episode-list', function() {
 
 gulp.task('rss', function () {
     gulp.src('episodes/*.json')
-        .pipe(episodeList('template/feed.jade', { 'ext': '.rss' }))
+        .pipe(episodeList('template/feed.jade', { 'ext': '.rss', 'includeLength': true }))
         .pipe(gulp.dest('output'));
 });
