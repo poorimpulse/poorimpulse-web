@@ -18,7 +18,7 @@ function episodePage(templateName) {
     return through.obj(function (file, enc, cb) {
         var templatePath = process.cwd() + '/' + templateName;
 
-        file.path = replaceExt(file.path, '.html');
+        file.path = replaceExt(file.path, '') + '/index.html';
 
         if (file.isBuffer()) {
             var template = jade.compileFile(templatePath, {

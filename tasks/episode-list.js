@@ -29,7 +29,7 @@ function episodeList(templateName, opts) {
     var cacheData = function (file, enc, cb) {
         if (file.isBuffer()) {
             var fdata = JSON.parse(String(file.contents));
-            fdata.guid = replaceExt(path.basename(file.path), '.html');
+            fdata.guid = replaceExt(path.basename(file.path), '');
             data.push(fdata);
         } else if (file.isStream()) {
             return cb(new PluginError(PLUGIN_NAME, 'Streaming not supported'));
