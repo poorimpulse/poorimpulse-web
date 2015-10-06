@@ -1,74 +1,28 @@
 var gulp = require('gulp'),
-    jade = require('jade'),
     path = require('path'),
     fs = require('fs'),
-    replaceExt = require('replace-ext');
-
-const PLUGIN_NAME = 'episodeList';
-
-// Episode Plugin
-var through = require('through2'),
-    gutil = require('gulp-util'),
-    PluginError = gutil.PluginError;
+    replaceExt = require('replace-ext'),
+    jsonList = require('../lib/json-list');
 
 function episodeList(templateName, opts) {
-    if (!templateName) {
-        throw new PluginError(PLUGIN_NAME, 'Missing template');
-    }
-
     opts = opts || {};
-
-    var data = [];
-    var outputFilename = replaceExt(path.basename(templateName), opts.ext || '.html');
-    var templatePath = process.cwd() + '/' + templateName;
-    var template = jade.compileFile(templatePath, {
-        filename: templatePath,
-        cache: true,
-        pretty: true
-    });
-
-    var cacheData = function (file, enc, cb) {
-        if (file.isBuffer()) {
-            var fdata = JSON.parse(String(file.contents));
-            if (!fdata.published) {
-              cb();
-              return;
-            }
-
-            fdata.guid = replaceExt(path.basename(file.path), '');
-
-            if (opts.includeLength) {
-                var audioPath = process.cwd() + '/audio/' + fdata.guid + '.mp3';
-                fs.stat(audioPath, function (err, stats) {
-                    if (err) {
-                        return cb(new PluginError(PLUGIN_NAME, err));
-                    }
-
-                    fdata.audioLength = stats.size;
-                    data.push(fdata);
-                    cb();
-                });
-            } else {
-                data.push(fdata);
-                cb();
-            }
-        } else if (file.isStream()) {
-            return cb(new PluginError(PLUGIN_NAME, 'Streaming not supported'));
-        } else {
-            cb();
+    opts.outputName = 'episodes';
+    return jsonList(templateName, opts, function(file, data) {
+        if (!data.published) {
+            return undefined;
         }
-    };
 
-    var endStream = function(cb) {
-        var outputFile = new gutil.File(outputFilename);
-        outputFile.contents = new Buffer(template({'episodes': data}));
-        outputFile.path = outputFilename;
+        data.guid = parseInt(replaceExt(path.basename(file.path), ''));
 
-        this.push(outputFile);
-        cb();
-    };
+        if (opts.includeLength) {
+            var audioPath = process.cwd() + '/audio/' + data.guid.toString() + '.mp3';
+            console.log(audioPath);
+            var stats = fs.statSync(audioPath);
+            data.audioLength = stats.size;
+        }
 
-    return through.obj(cacheData, endStream);
+        return data;
+    });
 }
 
 gulp.task('episode-list', function() {
