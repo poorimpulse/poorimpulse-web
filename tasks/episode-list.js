@@ -30,6 +30,11 @@ function episodeList(templateName, opts) {
     var cacheData = function (file, enc, cb) {
         if (file.isBuffer()) {
             var fdata = JSON.parse(String(file.contents));
+            if (!fdata.published) {
+              cb();
+              return;
+            }
+
             fdata.guid = replaceExt(path.basename(file.path), '');
 
             if (opts.includeLength) {
@@ -38,7 +43,7 @@ function episodeList(templateName, opts) {
                     if (err) {
                         return cb(new PluginError(PLUGIN_NAME, err));
                     }
-                    
+
                     fdata.audioLength = stats.size;
                     data.push(fdata);
                     cb();
@@ -72,7 +77,7 @@ gulp.task('episode-list', function() {
        .pipe(gulp.dest('output'));
 });
 
-gulp.task('rss', function () {
+gulp.task('rss', ['episode-audio'], function () {
     gulp.src('episodes/*.json')
         .pipe(episodeList('template/feed.jade', { 'ext': '.rss', 'includeLength': true }))
         .pipe(gulp.dest('output'));
