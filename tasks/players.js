@@ -12,7 +12,6 @@ var usedColumns = [
     'doyouwanttobegivencreditforthestoryaspartofthepodcast',
     'howwouldyoulikeyournametoappearinthepodcastepisodenotes',
     'urlforwhereyournameshouldlinkto',
-    'shortname',
     'gravatarurl'
 ],
     key = 'shortname',
@@ -43,7 +42,9 @@ function createStream() {
                         var entry = {};
                         for (var j = 0; j < usedColumns.length; j++) {
                             var columnName = usedColumns[j];
-                            entry[columnName] = rows[i][columnName];
+                            if (rows[i][columnName]) {
+                                entry[columnName] = rows[i][columnName];
+                            }
                         }
 
                         if (entry[filter] == filterValue) {
@@ -60,11 +61,11 @@ function createStream() {
 }
 
 gulp.task('build-player-json', function() {
-    fs.unlink(process.cwd() + '/.players.json', function() {
+    fs.unlink(process.cwd() + '/players.json', function() {
         var stream = createStream();
         stream.go();
         stream
-            .pipe(source('.players.json'))
+            .pipe(source('players.json'))
             .pipe(gulp.dest('.'));
     });
 });
