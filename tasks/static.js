@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     through = require('through2'),
     replaceExt = require('replace-ext'),
     gutil = require('gulp-util'),
+    path = require('path'),
     PluginError = gutil.PluginError;
 
 function SimplePage() {
@@ -11,10 +12,12 @@ function SimplePage() {
         if (file.isBuffer()) {
             var template = jade.compile(file.contents, {
                     cache: true,
-                    pretty: true
+                    pretty: true,
+                    filename: file.path
                 });
 
-            file.contents = new Buffer(template());
+            var page_id = replaceExt(path.basename(file.path), '');
+            file.contents = new Buffer(template({page_id: page_id}));
             file.path = replaceExt(file.path, '/index.html');
 
         } else if (file.isStream()) {

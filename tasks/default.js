@@ -13,7 +13,7 @@ gulp.task('default', default_tasks);
 gulp.task('watch', default_tasks, function () {
     gulp.watch('sass/*.sass', ['styles']);
     gulp.watch('template/_*.jade', [
-        'episode-pages', 'episode-list'
+        'episode-pages', 'episode-list', 'static-pages'
     ]);
     gulp.watch('template/episode.jade', ['episode-pages']);
     gulp.watch('template/feed.jade', ['rss']);

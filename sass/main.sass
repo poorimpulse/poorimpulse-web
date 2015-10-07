@@ -3,11 +3,19 @@
 $em-base: 20px
 $visual-grid: true !global
 $max-width: 48rem !global
+$visual-grid-color: lighten(#FFF0E8, 3%);
 
 body
   font-size: 20px
   background: #fdfdfc
   color: #222244
+
+a
+  text-decoration: none
+  color: #880000
+
+  &:hover
+    color: lighten(#884400, 5%)
 
 #header
   font-size: 1.75em
@@ -41,4 +49,11 @@ nav
     @include pad()
 
     &:hover
-      background: darken(#880000, 5%)
+      background: lighten(#884400, 5%)
+
+#page-about #about a,
+#page-contributors #contributors a
+  background: darken(#ff8800, 5%)
+
+article
+  @include row()
