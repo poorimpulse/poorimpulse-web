@@ -16,7 +16,6 @@ function episodeList(templateName, opts) {
 
         if (opts.includeLength) {
             var audioPath = process.cwd() + '/audio/' + data.guid.toString() + '.mp3';
-            console.log(audioPath);
             var stats = fs.statSync(audioPath);
             data.audioLength = stats.size;
         }
