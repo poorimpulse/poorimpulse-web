@@ -8,12 +8,12 @@ mixin person(shortname)
     - else
       =contributor.howwouldyoulikeyournametoappearinthepodcastepisodenotes
 
- mixin avatar(shortname)
+ mixin avatar(shortname, size)
   - var contributor = contributors[shortname]
-  - var url = 'http://www.gravatar.com/avatar/x?s=64&d=monsterid'
+  - var url = 'http://www.gravatar.com/avatar/x?d=monsterid'
   if (contributor)
     - url = contributor.gravatarurl
-  img(src=url)
+  img(src='#{url}&s=#{size}')
 
 mixin audio(episode)
   audio(controls preload='metadata')
@@ -23,7 +23,7 @@ mixin audio(episode)
 mixin credit(shortname, credit)
   .person
     .avatar
-      +avatar(shortname)
+      +avatar(shortname, 42)
     .name
       +person(shortname)
     .credit= credit
