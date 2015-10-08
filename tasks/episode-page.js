@@ -1,6 +1,8 @@
 var gulp = require('gulp'),
     jade = require('jade'),
     changed = require('gulp-changed'),
+    parseEpisode = require('../lib/parseEpisode'),
+    contributors = require('../players.json'),
     replaceExt = require('replace-ext');
 
 const PLUGIN_NAME = 'episodePage';
@@ -18,8 +20,6 @@ function episodePage(templateName) {
     return through.obj(function (file, enc, cb) {
         var templatePath = process.cwd() + '/' + templateName;
 
-        file.path = replaceExt(file.path, '') + '/index.html';
-
         if (file.isBuffer()) {
             var template = jade.compileFile(templatePath, {
                     filename: templatePath,
@@ -28,7 +28,19 @@ function episodePage(templateName) {
                 }),
                 data = JSON.parse(String(file.contents));
 
-            file.contents = new Buffer(template(data));
+            data = parseEpisode(false, file, data);
+            if (!data) {
+                // Skip non-published episodes
+                cb();
+                return;
+            }
+
+            file.path = replaceExt(file.path, '') + '/index.html';
+
+            file.contents = new Buffer(template({
+                episode: data,
+                contributors: contributors
+            }));
 
         } else if (file.isStream()) {
             return cb(new PluginError(PLUGIN_NAME, 'Streaming not supported'));

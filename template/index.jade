@@ -3,7 +3,7 @@ extends ./_layout.jade
 block content
   .episodeList
     each episode in episodes
-      .episode(id='episode#{episode.guid}')
+      .episode.captured(id='episode#{episode.guid}')
         .guid
           = episode.guid
           | .&nbsp;
@@ -22,6 +22,4 @@ block content
               - if(index !== 0)
                 | ,&nbsp;
               +person(contributor)
-          audio(controls preload='metadata')
-            source(src=episode.audio_url type='audio/mpeg')
-            | mp3 not supported by your browser, subscribe to listen
+          +audio(episode)

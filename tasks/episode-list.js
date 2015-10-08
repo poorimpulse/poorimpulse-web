@@ -1,28 +1,13 @@
 var gulp = require('gulp'),
-    path = require('path'),
-    fs = require('fs'),
-    replaceExt = require('replace-ext'),
+    parseEpisode = require('../lib/parseEpisode'),
     jsonList = require('../lib/json-list');
 
 function episodeList(templateName, opts) {
     opts = opts || {};
     opts.outputName = 'episodes';
     return jsonList(templateName, opts, function(file, data) {
-        if (!data.published) {
-            return undefined;
-        }
-
-        data.guid = parseInt(replaceExt(path.basename(file.path), ''));
-        data.permalink = '/' + data.guid.toString() + '/';
-        data.audio_url = '/audio/' + data.guid.toString() + '.mp3';
-
-        if (opts.includeLength) {
-            var audioPath = process.cwd() + '/audio/' + data.guid.toString() + '.mp3';
-            var stats = fs.statSync(audioPath);
-            data.audioLength = stats.size;
-        }
-
-        return data;
+        opts = opts || {};
+        return parseEpisode(opts.includeLength, file, data);
     });
 }
 

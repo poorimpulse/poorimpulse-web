@@ -1,0 +1,25 @@
+article
+  @include margin(modular-scale(1) null)
+
+  header
+    h1
+      @include margin(0)
+      font-size: 2em
+
+  .summary, .person-list, .playset
+    @include margin(modular-scale(1) null)
+
+  .person-list
+    @include row()
+
+    .person
+      @include span-columns(5)
+
+      .avatar
+        @include span-columns(2 of 5)
+        img
+          @include border-top-radius(2em)
+          @include border-bottom-radius(2em)
+
+      .credit
+        font-size: 0.75em

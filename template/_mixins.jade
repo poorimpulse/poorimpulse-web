@@ -1,6 +1,29 @@
 mixin person(shortname)
   - var contributor = contributors[shortname]
   - if(!contributor)
-    | anonymous
+    | Anonymous
   - else
-    = contributor
+    - if(contributor.urlforwhereyournameshouldlinkto)
+      a(href=contributor.urlforwhereyournameshouldlinkto)=contributor.howwouldyoulikeyournametoappearinthepodcastepisodenotes
+    - else
+      =contributor.howwouldyoulikeyournametoappearinthepodcastepisodenotes
+
+ mixin avatar(shortname)
+  - var contributor = contributors[shortname]
+  - var url = 'http://www.gravatar.com/avatar/x?s=64&d=monsterid'
+  if (contributor)
+    - url = contributor.gravatarurl
+  img(src=url)
+
+mixin audio(episode)
+  audio(controls preload='metadata')
+    source(src=episode.audio_url type='audio/mpeg')
+    | mp3 not supported by your browser, subscribe to listen
+
+mixin credit(shortname, credit)
+  .person
+    .avatar
+      +avatar(shortname)
+    .name
+      +person(shortname)
+    .credit= credit

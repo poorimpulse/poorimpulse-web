@@ -2,6 +2,9 @@ doctype html
 html
   include ./_mixins.jade
   head
+    title
+      block title
+        | Poor Impulse Control - a podcast of ambition people with poor impulse control
     link(href='/css/main.css' rel='stylesheet')
     link(href='/feed.rss' rel='alternate' type='application/rss+xml' title='RSS')
   body(id="page-#{page_id}")

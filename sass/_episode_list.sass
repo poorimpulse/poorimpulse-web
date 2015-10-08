@@ -3,12 +3,6 @@
   @include margin(modular-scale(1) null)
 
   .episode
-    @include border-style(solid)
-    @include border-width(4px)
-    @include border-color($highlight-color)
-    @include border-top-radius(4px)
-    @include border-bottom-radius(4px)
-    @include pad(modular-scale(1))
     @include row()
 
     .guid
@@ -19,7 +13,7 @@
     .description
       @include span-columns(11)
 
-      a
+      > a
         display: block
         font-size: modular-scale(1)
 
