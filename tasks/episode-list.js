@@ -13,6 +13,8 @@ function episodeList(templateName, opts) {
         }
 
         data.guid = parseInt(replaceExt(path.basename(file.path), ''));
+        data.permalink = '/' + data.guid.toString() + '/';
+        data.audio_url = '/audio/' + data.guid.toString() + '.mp3';
 
         if (opts.includeLength) {
             var audioPath = process.cwd() + '/audio/' + data.guid.toString() + '.mp3';

@@ -1,21 +1,27 @@
 extends ./_layout.jade
 
 block content
-  each episode in episodes
-    article(id='episode#{episode.guid}')
-      header
-        h1
-          span.title= episode.title
-          span.date= episode.date
-        .body
-          p= episode.summary
-          p
-            strong Story By:&nbsp;
-            = episode.story_by
-          p
-            strong Narrated By:&nbsp;
-            = episode.narrated_by
-          .player
-            audio(controls preload='metadata')
-              source(src=episode.url type='audio/mpeg')
-              | To listen to the episode, please subscribe
+  .episodeList
+    each episode in episodes
+      .episode(id='episode#{episode.guid}')
+        .guid
+          = episode.guid
+          | .&nbsp;
+        .description
+          a(href=episode.permalink)
+            = episode.title
+          .narrator
+            | narrated by&nbsp;
+            +person(episode.narrated_by)
+          p.summary
+            = episode.summary
+
+          p.contributors
+            | Story by:&nbsp;
+            - each contributor, index in episode.story_by
+              - if(index !== 0)
+                | ,&nbsp;
+              +person(contributor)
+          audio(controls preload='metadata')
+            source(src=episode.audio_url type='audio/mpeg')
+            | mp3 not supported by your browser, subscribe to listen

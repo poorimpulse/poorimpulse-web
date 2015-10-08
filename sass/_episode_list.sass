@@ -1,0 +1,33 @@
+.episodeList
+  @include outer-container(100%)
+  @include margin(modular-scale(1) null)
+
+  .episode
+    @include border-style(solid)
+    @include border-width(4px)
+    @include border-color($highlight-color)
+    @include border-top-radius(4px)
+    @include border-bottom-radius(4px)
+    @include pad(modular-scale(1))
+    @include row()
+
+    .guid
+      @include span-columns(1)
+      text-align: right
+      font-size: modular-scale(1)
+
+    .description
+      @include span-columns(11)
+
+      a
+        display: block
+        font-size: modular-scale(1)
+
+      audio
+        @include margin(modular-scale(0.5) null)
+
+      .summary
+        font-size: modular-scale(1)
+
+      .narrator, .contributors
+        font-size: 0.85em

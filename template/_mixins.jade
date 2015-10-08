@@ -1,0 +1,6 @@
+mixin person(shortname)
+  - var contributor = contributors[shortname]
+  - if(!contributor)
+    | anonymous
+  - else
+    = contributor
