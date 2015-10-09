@@ -1,3 +1,14 @@
-//
-   Created by rhay on 10/7/15.
+extends ../_layout
 
+block content
+  article.captured
+    header
+      h1 Narrators
+
+    +contributors(episode_map.narrators)
+
+  article.captured
+    header
+      h1 Players
+
+    +contributors(episode_map.contributors)

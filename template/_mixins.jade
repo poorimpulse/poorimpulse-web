@@ -27,3 +27,23 @@ mixin credit(shortname, credit)
     .name
       +person(shortname)
     .credit= credit
+
+mixin contributor(shortname, episodes)
+  - var person = contributors[shortname]
+  .avatar
+    +avatar(shortname, 128)
+  .person
+    +person(shortname)
+  .episodes
+    each episode, idx in episodes
+      - if(idx !== 0)
+        | ,&nbsp;
+      a(href=episode.permalink) #{episode.guid}. #{episode.title}
+
+mixin contributors(list)
+  ul.contributor-list
+    - var keys = Object.keys(list).sort()
+    each key in keys
+      li
+        +contributor(key, list[key])
+
