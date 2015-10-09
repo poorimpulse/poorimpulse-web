@@ -28,25 +28,27 @@ function episodePage(templateName) {
                 }),
                 data = JSON.parse(String(file.contents));
 
-            data = parseEpisode(false, file, data);
-            if (!data) {
-                // Skip non-published episodes
-                cb();
-                return;
-            }
+            parseEpisode(false, file, data, function (parsedData) {
+                if (!parsedData) {
+                    // Skip non-published episodes
+                    cb();
+                    return;
+                }
 
-            file.path = replaceExt(file.path, '') + '/index.html';
+                file.path = replaceExt(file.path, '') + '/index.html';
 
-            file.contents = new Buffer(template({
-                episode: data,
-                contributors: contributors
-            }));
+                file.contents = new Buffer(template({
+                    episode: parsedData,
+                    contributors: contributors
+                }));
+                cb(null, file);
+            });
 
         } else if (file.isStream()) {
             return cb(new PluginError(PLUGIN_NAME, 'Streaming not supported'));
+        } else {
+            cb();
         }
-
-        cb(null, file);
     });
 }
 

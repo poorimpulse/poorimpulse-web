@@ -5,9 +5,9 @@ var gulp = require('gulp'),
 function episodeList(templateName, opts) {
     opts = opts || {};
     opts.outputName = 'episodes';
-    return jsonList(templateName, opts, function(file, data) {
+    return jsonList(templateName, opts, function(file, data, cb) {
         opts = opts || {};
-        return parseEpisode(opts.includeLength, file, data);
+        parseEpisode(opts.includeLength, file, data, cb);
     });
 }
 

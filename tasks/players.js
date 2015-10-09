@@ -15,9 +15,7 @@ gulp.task('build-player-json', function() {
 });
 
 gulp.task('build-contributors-json', function() {
-    fs.unlink(process.cwd() + '/contributors.json', function() {
-       gulp.src('episodes/*.json')
-           .pipe(contributorTemplate())
-           .pipe(gulp.dest('.'));
-    });
+   gulp.src('episodes/*.json')
+       .pipe(contributorTemplate())
+       .pipe(gulp.dest('.'));
 });

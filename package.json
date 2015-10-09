@@ -19,6 +19,7 @@
     "gulp-util": "^3.0.6",
     "jade": "^1.11.0",
     "merge-stream": "^1.0.0",
+    "mp3-duration": "^1.0.5",
     "node-bourbon": "^4.2.3",
     "node-neat": "^1.7.2",
     "precommit-hook": "^3.0.0",
