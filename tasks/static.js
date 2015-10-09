@@ -40,3 +40,8 @@ gulp.task('static-pages', ['build-contributors-json'], function () {
         .pipe(SimplePage())
         .pipe(gulp.dest('output'));
 });
+
+gulp.task('static-files', function () {
+    gulp.src('static/*')
+        .pipe(gulp.dest('output'));
+});
