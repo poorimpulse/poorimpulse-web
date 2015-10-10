@@ -1,11 +1,14 @@
 doctype xml
-rss(version='2.0')
+rss(version='2.0' xmlns:itunes='http://www.itunes.com/dtds/podcast-1.0.dtd' xmlns:atom='http://www.w3.org/2005/Atom')
     channel
         title Poor Impulse Control
         description A podcast of ambitious people with poor impulse control
         link http://poorimpulse.co/
+        atom:link(href='http://poorimpulse.co/feed.rss' rel='self' type='application/rss+xml')
         language en
-        lastBuildDate= now
+        lastBuildDate
+            - var now = new Date()
+            = now.toUTCString()
         itunes:author Poor Impulse, Co.
         itunes:subtitle A podcast of ambitious people with poor impulse control
         itunes:summary
@@ -15,6 +18,7 @@ rss(version='2.0')
             itunes:name Russell Hay
             itunes:email podcast@poorimpulse.co
         itunes:image(href='http://poorimpulse.co/hex_pic.jpg')
+        itunes:explicit= No
         itunes:category(text="Comedy")
 
         for item in episodes
@@ -26,7 +30,7 @@ rss(version='2.0')
                 guid http://poorimpulse.co/#{item.guid}
                 enclosure(url="http://poorimpulse.co/audio/#{item.guid}.mp3" length="#{item.audioLength}" type="audio/mpeg")
                 itunes:author= item.narrated_by.name
-                itunes:explicit #{item.explicit}
-                itunes:duration #{item.duration}
-                itunes:keywords #{item.tags}
+                itunes:explicit= item.explicit
+                itunes:duration= item.duration
+                itunes:keywords= item.tags
 
