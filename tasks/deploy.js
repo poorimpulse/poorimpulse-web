@@ -7,10 +7,10 @@ var home = process.env.HOME || process.env.USERPROFILE;
 var credentials = JSON.parse(fs.readFileSync(home + '/.aws/impulse.json', 'utf8'));
 
 gulp.task('deploy', ['default'], function() {
-    gulp.src(['output/**', '!output/audio/**'])
+    gulp.src(['output/**', '!output/audio/**', '!output/feed.rss'])
         .pipe(gzip())
         .pipe(s3(credentials, { gzippedOnly: true }));
 
-    gulp.src(['output/audio/**'])
+    gulp.src(['output/audio/**', 'output/feed.rss'])
         .pipe(s3(credentials));
 });
