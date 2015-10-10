@@ -21,11 +21,12 @@ rss(version='2.0' xmlns:itunes='http://www.itunes.com/dtds/podcast-1.0.dtd' xmln
         itunes:explicit= No
         itunes:category(text="Comedy")
 
+
         for item in episodes
             item
                 title= item.title
                 pubDate= item.date
-                description= summary
+                description= item.summary
                 link http://poorimpulse.co/#{item.guid}
                 guid http://poorimpulse.co/#{item.guid}
                 enclosure(url="http://poorimpulse.co/audio/#{item.guid}.mp3" length="#{item.audioLength}" type="audio/mpeg")
