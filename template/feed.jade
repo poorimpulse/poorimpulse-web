@@ -3,32 +3,30 @@ rss(version='2.0')
     channel
         title Poor Impulse Control
         description A podcast of ambitious people with poor impulse control
-        link http://poorimpulse.co/ntrol/feed.rss
+        link http://poorimpulse.co/
         language en
         lastBuildDate= now
         itunes:author Poor Impulse, Co.
         itunes:subtitle A podcast of ambitious people with poor impulse control
         itunes:summary
-            | A monthly podcast that gives transforms games of Fiasco into short stories narrated by a rotating
+            | A monthly podcast that transforms games of Fiasco into short stories narrated by a rotating
             | cast of narrators.
         itunes:owner
             itunes:name Russell Hay
             itunes:email podcast@poorimpulse.co
-        itunes:explicit Yes
-        itunes:image(href='http://poorimpulse.co/podcast.jpg')
+        itunes:image(href='http://poorimpulse.co/hex_pic.jpg')
         itunes:category(text="Comedy")
-            itunes:category(text="")
 
         for item in episodes
             item
                 title= item.title
                 pubDate= item.date
                 description= summary
-                link http://poorimpulse.co/ntrol/#{item.guid}
-                guid http://poorimpulse.co/ntrol/#{item.guid}
-                enclosure(url="http://poorimpulse.co/ntrol/audio/#{item.guid}.mp3" length="#{item.audioLength}" type="audio/mpeg")
+                link http://poorimpulse.co/#{item.guid}
+                guid http://poorimpulse.co/#{item.guid}
+                enclosure(url="http://poorimpulse.co/audio/#{item.guid}.mp3" length="#{item.audioLength}" type="audio/mpeg")
                 itunes:author= item.narrated_by.name
-                itunes:explicit Yes
+                itunes:explicit #{item.explicit}
                 itunes:duration #{item.duration}
                 itunes:keywords #{item.tags}
 
