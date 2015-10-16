@@ -19,14 +19,15 @@ rss(version='2.0' xmlns:itunes='http://www.itunes.com/dtds/podcast-1.0.dtd' xmln
             itunes:name Russell Hay
             itunes:email podcast@poorimpulse.co
         itunes:image(href='http://poorimpulse.co/hex_pic.jpg')
-        itunes:explicit= No
+        itunes:explicit No
         itunes:category(text="Comedy")
 
 
         for item in episodes
             item
                 title= item.title
-                pubDate= item.date
+                - var date = new Date(item.date)
+                pubDate= date.toUTCString()
                 description
                   | <![CDATA[
                   | <p>#{item.summary}</p>
