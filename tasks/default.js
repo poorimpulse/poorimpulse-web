@@ -5,6 +5,7 @@ var default_tasks = [
     'episode-pages',
     'rss',
     'static-pages',
+    'static-files',
     'styles'
 ];
 

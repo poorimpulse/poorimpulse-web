@@ -11,6 +11,6 @@ gulp.task('deploy', ['default'], function() {
         .pipe(gzip())
         .pipe(s3(credentials, { gzippedOnly: true }));
 
-    gulp.src(['output/audio/**', 'output/feed.rss'])
+    gulp.src(['output/**/*.mp3', 'output/feed.rss'])
         .pipe(s3(credentials));
 });
