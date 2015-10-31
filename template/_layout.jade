@@ -6,6 +6,7 @@ html
       block title
         | Poor Impulse Control - a podcast of ambition people with poor impulse control
     link(href='/css/main.css' rel='stylesheet')
+    link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' rel='stylesheet')
     link(href='/feed.rss' rel='alternate' type='application/rss+xml' title='RSS')
   body(id="page-#{page_id}")
     #header
@@ -14,15 +15,27 @@ html
         span#subtitle an audiobook podcast
     section#main
       nav
-        .nav-button#about
+        .nav-button.wide#about
           a(href='/about')
-            | about
-        .nav-button#contributors
+            | About
+        .nav-button.wide#contributors
           a(href='/contributors')
-            | contributors
-        .nav-button#subscribe
+            | Contributors
+        .nav-button.wide#supporters
+          a(href='/supporters')
+            | Supporters
+        .nav-button.wide#overcast
+          a(href='https://overcast.fm/itunes1050183916/poor-impulse-control')
+            | Overcast
+        .nav-button.wide#pocketcasts
+          a(href='http://pcasts.in/feed/poorimpulse.co/feed.rss')
+            | PocketCasts
+        .nav-button.narrow#rss
           a(href='/feed.rss')
-            | subscribe
+            i.fa.fa-feed
+        .nav-button.narrow#itunes
+          a(href='https://itunes.apple.com/us/podcast/poor-impulse-control/id1050183916?mt=2')
+            i.fa.fa-apple
       block content
       block footer
     script

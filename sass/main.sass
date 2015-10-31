@@ -40,9 +40,16 @@ nav
 
 
 .nav-button
-  @include span-columns(3)
+  font-size: 0.85em
   min-height: 1.5em
   line-height: 1.5em
+
+  &.wide
+    @include span-columns(2)
+  &.narrow
+    @include span_columns(1)
+    min-height: 1.5em
+
   background: $highlight-color
   text-align: center
   @include border-top-radius(3px)
@@ -58,6 +65,9 @@ nav
 
     &:hover
       background: lighten($dark-highlight-color, 5%)
+
+.nav-button#itunes
+  @include omega()
 
 #page-about #about a,
 #page-contributors #contributors a
