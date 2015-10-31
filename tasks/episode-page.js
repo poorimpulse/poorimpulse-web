@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
     jade = require('jade'),
-    changed = require('gulp-changed'),
+    //changed = require('gulp-changed'),
     parseEpisode = require('../lib/parseEpisode'),
     contributors = require('../players.json'),
     replaceExt = require('replace-ext');
@@ -54,7 +54,7 @@ function episodePage(templateName) {
 
 gulp.task('episode-pages', function() {
    gulp.src('episodes/*.json')
-       .pipe(changed('output'))
+       //.pipe(changed('output'))
        .pipe(episodePage('template/episode.jade'))
        .pipe(gulp.dest('output'));
 });

@@ -1,5 +1,5 @@
 var gulp = require('gulp'),
-    changed = require('gulp-changed'),
+    //changed = require('gulp-changed'),
     jade = require('jade'),
     through = require('through2'),
     replaceExt = require('replace-ext'),
@@ -36,7 +36,7 @@ function SimplePage() {
 
 gulp.task('static-pages', ['build-contributors-json'], function () {
     gulp.src('template/static/*.jade')
-        .pipe(changed('output'))
+        //.pipe(changed('output'))
         .pipe(SimplePage())
         .pipe(gulp.dest('output'));
 });
