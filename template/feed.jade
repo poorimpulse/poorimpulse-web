@@ -7,8 +7,11 @@ rss(version='2.0' xmlns:itunes='http://www.itunes.com/dtds/podcast-1.0.dtd' xmln
         link http://poorimpulse.co/
         atom:link(href='http://poorimpulse.co/feed.rss' rel='self' type='application/rss+xml')
         language en
+        ttl 1440
         lastBuildDate
             - var now = new Date()
+            = now.toUTCString()
+        pubDate
             = now.toUTCString()
         itunes:author Poor Impulse, Co.
         itunes:subtitle A podcast of ambitious people with poor impulse control
@@ -70,6 +73,6 @@ rss(version='2.0' xmlns:itunes='http://www.itunes.com/dtds/podcast-1.0.dtd' xmln
           link http://poorimpulse.co/
           guid http://poorimpulse.co/
           enclosure(url="http://poorimpulse.co/audio/intro.mp3" length="492449" type="audio/mpeg")
-          itunes:author Russell Hay
+          itunes:author Poor Impulse, Co.
           itunes:explicit No
           itunes:duration 00:00:41
