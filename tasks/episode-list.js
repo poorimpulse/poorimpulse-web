@@ -19,8 +19,8 @@ gulp.task('episode-list', function() {
 
 gulp.task('rss', ['episode-audio'], function () {
     gulp.src('episodes/*.json')
-        .pipe(episodeList('template/feed.jade', { 'ext': '.rss', 'includeLength': true }, function (data) {
-            return data.slice(0, 5);
+        .pipe(episodeList('template/feed.jade', { 'ascending': true, 'ext': '.rss', 'includeLength': true }, function (data) {
+            return data;
         }))
         .pipe(gulp.dest('output'));
 });
