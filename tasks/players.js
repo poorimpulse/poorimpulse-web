@@ -1,12 +1,20 @@
 var gulp = require('gulp'),
     fs = require('fs'),
     source = require('vinyl-source-stream'),
+    sheet_id = require(process.cwd() + '/.players-sheet-id.json'),
     createStream = require('../lib/google-stream'),
-    contributorTemplate = require('../lib/contributor-stream');
+    contributorTemplate = require('../lib/contributor-stream'),
+    usedColumns = [
+      'doyouwanttobegivencreditforthestoryaspartofthepodcast',
+      'howwouldyoulikeyournametoappearinthepodcastepisodenotes',
+      'urlforwhereyournameshouldlinkto',
+      'gravatarurl'
+    ],
+    filter = 'doyouwanttobegivencreditforthestoryaspartofthepodcast';
 
 gulp.task('build-player-json', function() {
     fs.unlink(process.cwd() + '/players.json', function() {
-        var stream = createStream();
+        var stream = createStream(sheet_id, usedColumns, filter);
         stream.go();
         stream
             .pipe(source('players.json'))
