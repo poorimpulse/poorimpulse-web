@@ -10,11 +10,12 @@ var gulp = require('gulp'),
       'urlforwhereyournameshouldlinkto',
       'gravatarurl'
     ],
+    key = 'shortname',
     filter = 'doyouwanttobegivencreditforthestoryaspartofthepodcast';
 
 gulp.task('build-player-json', function() {
     fs.unlink(process.cwd() + '/players.json', function() {
-        var stream = createStream(sheet_id, usedColumns, filter);
+        var stream = createStream(sheet_id, key, usedColumns, filter);
         stream.go();
         stream
             .pipe(source('players.json'))

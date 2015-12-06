@@ -1,15 +1,19 @@
-mixin person(shortname)
-  - var contributor = contributors[shortname]
+mixin person(contributor)
   - if(!contributor)
     | Anonymous
+  - else if (contributor.displayname)  // This is a supporter
+    - if(contributor.link)
+      a(href=contributor.link)= contributor.displayname
+    - else
+      = contributor.displayname
   - else
     - if(contributor.urlforwhereyournameshouldlinkto)
-      a(href=contributor.urlforwhereyournameshouldlinkto)=contributor.howwouldyoulikeyournametoappearinthepodcastepisodenotes
+      a(href=contributor.urlforwhereyournameshouldlinkto)
+         = contributor.howwouldyoulikeyournametoappearinthepodcastepisodenotes
     - else
-      =contributor.howwouldyoulikeyournametoappearinthepodcastepisodenotes
+      = contributor.howwouldyoulikeyournametoappearinthepodcastepisodenotes
 
- mixin avatar(shortname, size)
-  - var contributor = contributors[shortname]
+ mixin avatar(contributor, size)
   - var url = 'http://www.gravatar.com/avatar/x?d=monsterid'
   if (contributor)
     - url = contributor.gravatarurl
@@ -30,19 +34,20 @@ mixin playset(episode)
       | .
 
 mixin credit(shortname, credit)
+  - var person = contributors[shortname]
   .person
     .avatar
-      +avatar(shortname, 42)
+      +avatar(person, 42)
     .name
-      +person(shortname)
+      +person(person)
     .credit= credit
 
 mixin contributor(shortname, episodes)
   - var person = contributors[shortname]
   .avatar
-    +avatar(shortname, 128)
+    +avatar(person, 128)
   .person
-    +person(shortname)
+    +person(person)
   .episodes
     each episode, idx in episodes
       - if(idx !== 0)
@@ -50,9 +55,18 @@ mixin contributor(shortname, episodes)
       a(href=episode.permalink) #{episode.guid}. #{episode.title}
 
 mixin contributors(list)
-  ul.contributor-list
+  ul.contributor-list.person-list
     - var keys = Object.keys(list).sort()
     each key in keys
       li
         +contributor(key, list[key])
 
+mixin supporter(shortname, filter)
+  - var person = supporters[shortname]
+  if person[filter] === 'Yes'
+    li
+      +_supporter(person)
+
+mixin _supporter(person)
+  .person
+    +person(person)

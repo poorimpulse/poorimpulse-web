@@ -32,7 +32,7 @@ block content
             = episode.title
           .narrator
             | narrated by&nbsp;
-            +person(episode.narrated_by)
+            +person(contributors[episode.narrated_by])
           p.summary
             = episode.summary
 
@@ -41,5 +41,5 @@ block content
             - each contributor, index in episode.story_by
               - if(index !== 0)
                 | ,&nbsp;
-              +person(contributor)
+              +person(contributors[contributor])
           +audio(episode)

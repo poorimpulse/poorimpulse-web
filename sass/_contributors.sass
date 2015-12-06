@@ -1,4 +1,4 @@
-.contributor-list
+.person-list
   list-style: none
   @include pad(default 0)
 
@@ -13,3 +13,13 @@
       font-size: 1.5em
       line-height: 1.25em
 
+.supporters-list
+  display: -webkit-flex
+  display: flex
+  flex-flow: row wrap
+  list-style: none
+  @include pad(default 0)
+
+  li
+    width: 33%
+    @include pad(default)
