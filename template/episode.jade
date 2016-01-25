@@ -14,7 +14,7 @@ block content
 
     - if (episode.notes)
       .notes
-        = episode.notes
+        != episode.notes
 
     .player
       +audio(episode)

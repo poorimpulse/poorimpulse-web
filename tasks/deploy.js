@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 var home = process.env.HOME || process.env.USERPROFILE;
 var credentials = JSON.parse(fs.readFileSync(home + '/.aws/impulse.json', 'utf8'));
 
-gulp.task('deploy', ['deploy-gzip', 'deploy-audio', 'deploy-feed', 'deploy-images']);
+gulp.task('deploy', ['deploy-gzip', 'deploy-feed', 'deploy-images']);
 
 gulp.task('deploy-gzip', ['default'], function() {
     gulp.src(['output/**', '!output/*.png', '!output/audio/**', '!output/feed.rss'])
